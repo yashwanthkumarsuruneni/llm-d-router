@@ -50,9 +50,7 @@ type testKeyPair struct {
 }
 
 // cachedTestKeyPair is an ECDSA P-256 key pair generated once and shared by
-// every test that only needs some certificate on disk. The serving listener's
-// self-signed fallback generates an RSA-4096 key instead, which can take over
-// a second under -race, so only TestStartHTTP_SelfSignedFallback pays for it.
+// tests that only need some certificate on disk.
 var cachedTestKeyPair = sync.OnceValues(func() (testKeyPair, error) {
 	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {

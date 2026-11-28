@@ -99,8 +99,9 @@ func TestStartHTTP_ServesCertFromCertPath(t *testing.T) {
 	require.Equal(t, testCert(t).der, servedCert(t, addr).Raw, "listener served a certificate other than the one in cert-path")
 }
 
-// TestStartHTTP_SelfSignedFallback is the only test here that pays for the
-// fallback's RSA-4096 key generation.
+// TestStartHTTP_SelfSignedFallback checks that secure serving without a
+// cert-path serves the certificate from CreateSelfSignedTLSCertificate. The
+// other tests in this file set a cert-path so they skip its RSA-4096 keygen.
 func TestStartHTTP_SelfSignedFallback(t *testing.T) {
 	addr := serveTLS(t, Config{})
 
